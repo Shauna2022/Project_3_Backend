@@ -11,7 +11,6 @@ const morgan = require("morgan");
 //                      INITITALIZE EXPRESS & PORT
 //
 const app = express();
-
 require("dotenv").config();
 
 //
