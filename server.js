@@ -55,6 +55,9 @@ const Houston = mongoose.model("Houston", restaurantSchema);
 
 //                      ROUTES
 ////////////////////////////////////////////////////////////
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 ////////////////////////INDEX ////////////////////////
 app.get("/detroit", async (req, res) => {
   try {
@@ -103,4 +106,4 @@ app.post("/houston", async (req, res) => {
 //                      LISTEN FOR PORT
 ////////////////////////////////////////////////////////////
 const PORT = process.env.PORT;
-app.listen(PORT, () => console.log("backend is listening on :" + PORT));
+app.listen(PORT, () => console.log(`Express is listening on: ${PORT}`));
