@@ -18,9 +18,7 @@ require("dotenv").config();
 //                      SET UP DATEBASE
 //
 
-const { PORT = 4000, MONGODB_URL } = process.env;
-
-mongoose.connect(MONGODB_URL);
+mongoose.connect(process.env.DATABASE_URL);
 
 mongoose.connection
   .on("open", () => console.log("You are connected to mongoose"))
@@ -216,7 +214,7 @@ app.put("/raleigh/:id", async (req, res) => {
 });
 
 //
-//                      Create Routes
+// Create Routes
 //
 
 // Detroit
@@ -258,4 +256,5 @@ app.post("/raleigh", async (req, res) => {
 // S
 
 // Tell Express to Listen
+const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`Express is listening on: ${PORT}`));
