@@ -61,8 +61,8 @@ The H.A.R.D. Restaurant Tracker provides users the ability to view recommended r
 - TBD
 
 - You can view the repository:
-  - <a href="https://github.com/jakerwalton/Project_3_Frontend">Backend</a>
-  - <a href="">Frontend</a>
+  - <a href="https://github.com/Shauna2022/Project_3_Backend">Backend</a>
+  - <a href="https://github.com/jakerwalton/Project_3_Frontend">Frontend</a>
 - If unable to view please go live locally through VS Code
 
 ## Works Cited:
