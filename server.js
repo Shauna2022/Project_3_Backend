@@ -1,24 +1,22 @@
-////////////////////////////////////////////////////////////
+//
 //                      REQUIRE DEPENDENCIES
-////////////////////////////////////////////////////////////
+//
 
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const morgan = require("morgan");
 
-
-////////////////////////////////////////////////////////////
+//
 //                      INITITALIZE EXPRESS & PORT
-////////////////////////////////////////////////////////////
+//
 const app = express();
 
 require("dotenv").config();
 
-
-////////////////////////////////////////////////////////////
+//
 //                      SET UP DATEBASE
-////////////////////////////////////////////////////////////
+//
 
 mongoose.connect(process.env.DATABASE_URL);
 
@@ -27,18 +25,18 @@ mongoose.connection
   .on("close", () => console.log("You are disconnected from mongoose"))
   .on("error", (error) => console.log(error));
 
-
-////////////////////////////////////////////////////////////
+//
 //                      MIDDLEWARE
-////////////////////////////////////////////////////////////
+//
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
-////////////////////////////////////////////////////////////
-////////////////////////////MODELS/////////////////////////
+
+//
+//                      MODELS
+//
 // Restaurant Schema
 const restaurantSchema = new mongoose.Schema({
-
   name: { type: String, required: true }, // Name of restaurant/foodtruck
   address: { type: String, required: true },
   city: { type: String, required: true },
@@ -57,17 +55,17 @@ const restaurantSchema = new mongoose.Schema({
 // Restaurant Model
 const Detroit = mongoose.model("Detroit", restaurantSchema);
 const Houston = mongoose.model("Houston", restaurantSchema);
-
-
-////////////////////////////////////////////////////////////
+const Austin = mongoose.model("Austin", restaurantSchema);
+const Raleigh = mongoose.model("Raleigh", restaurantSchema);
 
 //                      ROUTES
-////////////////////////////////////////////////////////////
+
+// Test Route
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
-////////////////////////INDEX ////////////////////////
 
+// Index
 app.get("/detroit", async (req, res) => {
   try {
     res.json(await Detroit.find({}));
@@ -84,15 +82,30 @@ app.get("/houston", async (req, res) => {
     res.json({ error: "something is wrong check console" });
   }
 });
+app.get("/austin", async (req, res) => {
+  try {
+    res.json(await Austin.find({}));
+  } catch (error) {
+    console.log("error: ", error);
+    res.json({ error: "something is wrong check console" });
+  }
+});
+app.get("/raleigh", async (req, res) => {
+  try {
+    res.json(await Raleigh.find({}));
+  } catch (error) {
+    console.log("error: ", error);
+    res.json({ error: "something is wrong check console" });
+  }
+});
 
+// N
 
-//////////////////////// NEW ////////////////////////
+// D
 
-//////////////////////// DELETE ////////////////////////
+// U
 
-//////////////////////// UPDATE ////////////////////////
-
-//////////////////////// CREATE ////////////////////////
+// Create
 
 app.post("/detroit", async (req, res) => {
   try {
@@ -108,16 +121,25 @@ app.post("/houston", async (req, res) => {
     res.json({ error: "something went wrong check console" });
   }
 });
+app.post("/austin", async (req, res) => {
+  try {
+    res.json(await Austin.create(req.body));
+  } catch (error) {
+    res.json({ error: "something went wrong check console" });
+  }
+});
+app.post("/raleigh", async (req, res) => {
+  try {
+    res.json(await Raleigh.create(req.body));
+  } catch (error) {
+    res.json({ error: "something went wrong check console" });
+  }
+});
 
+// E
 
-//////////////////////// EDIT ////////////////////////
+// S
 
-//////////////////////// SHOW ////////////////////////////
-
-////////////////////////////////////////////////////////////
-//                      LISTEN FOR PORT
-////////////////////////////////////////////////////////////
-
+// Tell Express to Listen
 const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`Express is listening on: ${PORT}`));
-
