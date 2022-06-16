@@ -2,20 +2,25 @@
 //                      REQUIRE DEPENDENCIES
 ////////////////////////////////////////////////////////////
 const express = require('express');
-const app = express();
-require('dotenv').config();
 const mongoose = require('mongoose');
 const cors = require('cors');
 const morgan = require('morgan');
+
 ////////////////////////////////////////////////////////////
 //                      INITITALIZE EXPRESS & PORT
 ////////////////////////////////////////////////////////////
-
-
+const app = express();
+require('dotenv').config();
+// const {DATABASE_URL} = process.env
 ////////////////////////////////////////////////////////////
 //                      SET UP DATEBASE
 ////////////////////////////////////////////////////////////
+// mongoose.connect('DATABASE_URL')
 
+// mongoose.connection
+//     .on("open", () => console.log("You are connected to mongoose"))
+//     .on("close", () => console.log("You are disconnected from mongoose"))
+//     .on("error", (error) => console.log(error));
 
 ////////////////////////////////////////////////////////////
 //                      MIDDLEWARE
@@ -26,6 +31,11 @@ app.use(express.json());
 ////////////////////////////////////////////////////////////
 //                      ROUTES
 ////////////////////////////////////////////////////////////
+app.get('/', (req,res) =>{
+    res.send("hi")
+})
+
+
 ////////////////////////INDEX ////////////////////////
 
 
@@ -49,3 +59,5 @@ app.use(express.json());
 ////////////////////////////////////////////////////////////
 //                      LISTEN FOR PORT
 ////////////////////////////////////////////////////////////
+const PORT = process.env.PORT
+app.listen(PORT, ()=> console.log("backend is listening on :" + PORT ))
