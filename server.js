@@ -1,26 +1,32 @@
 ////////////////////////////////////////////////////////////
 //                      REQUIRE DEPENDENCIES
 ////////////////////////////////////////////////////////////
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const morgan = require("morgan");
 
+
 ////////////////////////////////////////////////////////////
 //                      INITITALIZE EXPRESS & PORT
 ////////////////////////////////////////////////////////////
 const app = express();
+
 require("dotenv").config();
+
 
 ////////////////////////////////////////////////////////////
 //                      SET UP DATEBASE
 ////////////////////////////////////////////////////////////
+
 mongoose.connect(process.env.DATABASE_URL);
 
 mongoose.connection
   .on("open", () => console.log("You are connected to mongoose"))
   .on("close", () => console.log("You are disconnected from mongoose"))
   .on("error", (error) => console.log(error));
+
 
 ////////////////////////////////////////////////////////////
 //                      MIDDLEWARE
@@ -32,6 +38,7 @@ app.use(express.json());
 ////////////////////////////MODELS/////////////////////////
 // Restaurant Schema
 const restaurantSchema = new mongoose.Schema({
+
   name: { type: String, required: true }, // Name of restaurant/foodtruck
   address: { type: String, required: true },
   city: { type: String, required: true },
@@ -51,6 +58,7 @@ const restaurantSchema = new mongoose.Schema({
 const Detroit = mongoose.model("Detroit", restaurantSchema);
 const Houston = mongoose.model("Houston", restaurantSchema);
 
+
 ////////////////////////////////////////////////////////////
 
 //                      ROUTES
@@ -59,6 +67,7 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 ////////////////////////INDEX ////////////////////////
+
 app.get("/detroit", async (req, res) => {
   try {
     res.json(await Detroit.find({}));
@@ -76,6 +85,7 @@ app.get("/houston", async (req, res) => {
   }
 });
 
+
 //////////////////////// NEW ////////////////////////
 
 //////////////////////// DELETE ////////////////////////
@@ -83,6 +93,7 @@ app.get("/houston", async (req, res) => {
 //////////////////////// UPDATE ////////////////////////
 
 //////////////////////// CREATE ////////////////////////
+
 app.post("/detroit", async (req, res) => {
   try {
     res.json(await Detroit.create(req.body));
@@ -98,6 +109,7 @@ app.post("/houston", async (req, res) => {
   }
 });
 
+
 //////////////////////// EDIT ////////////////////////
 
 //////////////////////// SHOW ////////////////////////////
@@ -105,5 +117,7 @@ app.post("/houston", async (req, res) => {
 ////////////////////////////////////////////////////////////
 //                      LISTEN FOR PORT
 ////////////////////////////////////////////////////////////
+
 const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`Express is listening on: ${PORT}`));
+
