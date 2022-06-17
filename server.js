@@ -11,7 +11,6 @@ const morgan = require("morgan");
 //                      INITITALIZE EXPRESS & PORT
 //
 const app = express();
-
 require("dotenv").config();
 
 //
@@ -62,7 +61,9 @@ const Raleigh = mongoose.model("Raleigh", restaurantSchema);
 
 // Test Route
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send(
+    "https://project-3-backend-hard.herokuapp.com/detroit, https://project-3-backend-hard.herokuapp.com/austin, https://project-3-backend-hard.herokuapp.com/houston, https://project-3-backend-hard.herokuapp.com/raleigh"
+  );
 });
 
 //
