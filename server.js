@@ -61,9 +61,7 @@ const Raleigh = mongoose.model("Raleigh", restaurantSchema);
 
 // Test Route
 app.get("/", (req, res) => {
-  res.send(
-    "https://project-3-backend-hard.herokuapp.com/detroit, https://project-3-backend-hard.herokuapp.com/austin, https://project-3-backend-hard.herokuapp.com/houston, https://project-3-backend-hard.herokuapp.com/raleigh"
-  );
+  res.render("index.ejs");
 });
 
 //
