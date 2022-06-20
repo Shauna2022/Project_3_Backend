@@ -52,6 +52,7 @@ const restaurantSchema = new mongoose.Schema({
 });
 
 // Restaurant Model
+const All = mongoose.model("All", restaurantSchema);
 const Detroit = mongoose.model("Detroit", restaurantSchema);
 const Houston = mongoose.model("Houston", restaurantSchema);
 const Austin = mongoose.model("Austin", restaurantSchema);
@@ -67,6 +68,16 @@ app.get("/", (req, res) => {
 //
 //                      Index Routes
 //
+
+// ALL
+app.get("/all", async (req, res) => {
+  try {
+    res.json(await All.find({}));
+  } catch (error) {
+    console.log("error: ", error);
+    res.json({ error: "something is wrong check console" });
+  }
+});
 
 // Detroit
 app.get("/detroit", async (req, res) => {
@@ -111,6 +122,17 @@ app.get("/raleigh", async (req, res) => {
 //
 //                      Delete Routes
 //
+// ALL
+app.delete("/all/:id", async (req, res) => {
+  try {
+    // Send all people
+    res.json(await All.findByIdAndDelete(req.params.id));
+  } catch (error) {
+    // Send error
+    console.log("error: ", error);
+    res.json({ error: "something went wrong - check console" });
+  }
+});
 
 // Detroit
 app.delete("/detroit/:id", async (req, res) => {
@@ -163,6 +185,17 @@ app.delete("/raleigh/:id", async (req, res) => {
 //
 //                      Update Routes
 //
+// ALL
+app.put("/all/:id", async (req, res) => {
+  try {
+    res.json(
+      await All.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    );
+  } catch (error) {
+    console.log("error: ", error);
+    res.json({ error: "something went wrong - check the console" });
+  }
+});
 
 // Detroit
 app.put("/detroit/:id", async (req, res) => {
@@ -215,6 +248,15 @@ app.put("/raleigh/:id", async (req, res) => {
 //
 // Create Routes
 //
+
+// ALL
+app.post("/all", async (req, res) => {
+  try {
+    res.json(await All.create(req.body));
+  } catch (error) {
+    res.json({ error: "something went wrong check console" });
+  }
+});
 
 // Detroit
 app.post("/detroit", async (req, res) => {
