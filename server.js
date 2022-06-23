@@ -2,34 +2,34 @@
 //                      REQUIRE DEPENDENCIES
 //
 
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const morgan = require("morgan");
+const express = require("express")
+const mongoose = require("mongoose")
+const cors = require("cors")
+const morgan = require("morgan")
 
 //
 //                      INITITALIZE EXPRESS & PORT
 //
-const app = express();
-require("dotenv").config();
+const app = express()
+require("dotenv").config()
 
 //
 //                      SET UP DATEBASE
 //
 
-mongoose.connect(process.env.DATABASE_URL);
+mongoose.connect(process.env.DATABASE_URL)
 
 mongoose.connection
   .on("open", () => console.log("You are connected to mongoose"))
   .on("close", () => console.log("You are disconnected from mongoose"))
-  .on("error", (error) => console.log(error));
+  .on("error", (error) => console.log(error))
 
 //
 //                      MIDDLEWARE
 //
-app.use(cors());
-app.use(morgan("dev"));
-app.use(express.json());
+app.use(cors())
+app.use(morgan("dev"))
+app.use(express.json())
 
 //
 //                      MODELS
@@ -49,253 +49,77 @@ const restaurantSchema = new mongoose.Schema({
   comments: { type: String, required: true }, // User's comments/reviews
   googleRating: { type: Number },
   yelpRating: { type: Number },
-});
+})
 
 // Restaurant Model
-const All = mongoose.model("All", restaurantSchema);
-const Detroit = mongoose.model("Detroit", restaurantSchema);
-const Houston = mongoose.model("Houston", restaurantSchema);
-const Austin = mongoose.model("Austin", restaurantSchema);
-const Raleigh = mongoose.model("Raleigh", restaurantSchema);
+const All = mongoose.model("All", restaurantSchema)
 
 //                      ROUTES
 
-// Test Route
+// Root Route
 app.get("/", (req, res) => {
-  res.render("index.ejs");
-});
+  res.render("index.ejs")
+})
 
 //
-//                      Index Routes
+//                      Index Route
 //
 
-// ALL
 app.get("/all", async (req, res) => {
   try {
-    res.json(await All.find({}));
+    res.json(await All.find({}))
   } catch (error) {
-    console.log("error: ", error);
-    res.json({ error: "something is wrong check console" });
+    console.log("error: ", error)
+    res.json({ error: "something is wrong check console" })
   }
-});
-
-// // Detroit
-// app.get("/detroit", async (req, res) => {
-//   try {
-//     res.json(await Detroit.find({}));
-//   } catch (error) {
-//     console.log("error: ", error);
-//     res.json({ error: "something is wrong check console" });
-//   }
-// });
-
-// // Houston
-// app.get("/houston", async (req, res) => {
-//   try {
-//     res.json(await Houston.find({}));
-//   } catch (error) {
-//     console.log("error: ", error);
-//     res.json({ error: "something is wrong check console" });
-//   }
-// });
-
-// // Austin
-// app.get("/austin", async (req, res) => {
-//   try {
-//     res.json(await Austin.find({}));
-//   } catch (error) {
-//     console.log("error: ", error);
-//     res.json({ error: "something is wrong check console" });
-//   }
-// });
-
-// // Raleigh
-// app.get("/raleigh", async (req, res) => {
-//   try {
-//     res.json(await Raleigh.find({}));
-//   } catch (error) {
-//     console.log("error: ", error);
-//     res.json({ error: "something is wrong check console" });
-//   }
-// });
+})
 
 //
-//                      Delete Routes
+//                      Delete Route
 //
-// ALL
+
 app.delete("/all/:id", async (req, res) => {
   try {
     // Send all people
-    res.json(await All.findByIdAndDelete(req.params.id));
+    res.json(await All.findByIdAndDelete(req.params.id))
   } catch (error) {
     // Send error
-    console.log("error: ", error);
-    res.json({ error: "something went wrong - check console" });
+    console.log("error: ", error)
+    res.json({ error: "something went wrong - check console" })
   }
-});
-
-// // Detroit
-// app.delete("/detroit/:id", async (req, res) => {
-//   try {
-//     // Send all people
-//     res.json(await Detroit.findByIdAndDelete(req.params.id));
-//   } catch (error) {
-//     // Send error
-//     console.log("error: ", error);
-//     res.json({ error: "something went wrong - check console" });
-//   }
-// });
-
-// // Houston
-// app.delete("/houston/:id", async (req, res) => {
-//   try {
-//     // Send all people
-//     res.json(await Houston.findByIdAndDelete(req.params.id));
-//   } catch (error) {
-//     // Send error
-//     console.log("error: ", error);
-//     res.json({ error: "something went wrong - check console" });
-//   }
-// });
-
-// // Austin
-// app.delete("/austin/:id", async (req, res) => {
-//   try {
-//     // Send all people
-//     res.json(await Austin.findByIdAndDelete(req.params.id));
-//   } catch (error) {
-//     // Send error
-//     console.log("error: ", error);
-//     res.json({ error: "something went wrong - check console" });
-//   }
-// });
-
-// // Raleigh
-// app.delete("/raleigh/:id", async (req, res) => {
-//   try {
-//     // Send all people
-//     res.json(await Raleigh.findByIdAndDelete(req.params.id));
-//   } catch (error) {
-//     // Send error
-//     console.log("error: ", error);
-//     res.json({ error: "something went wrong - check console" });
-//   }
-// });
+})
 
 //
-//                      Update Routes
+//                      Update Route
 //
-// ALL
+
 app.put("/all/:id", async (req, res) => {
   try {
     res.json(
       await All.findByIdAndUpdate(req.params.id, req.body, { new: true })
-    );
+    )
   } catch (error) {
-    console.log("error: ", error);
-    res.json({ error: "something went wrong - check the console" });
+    console.log("error: ", error)
+    res.json({ error: "something went wrong - check the console" })
   }
-});
-
-// // Detroit
-// app.put("/detroit/:id", async (req, res) => {
-//   try {
-//     res.json(
-//       await Detroit.findByIdAndUpdate(req.params.id, req.body, { new: true })
-//     );
-//   } catch (error) {
-//     console.log("error: ", error);
-//     res.json({ error: "something went wrong - check the console" });
-//   }
-// });
-
-// // Houston
-// app.put("/houston/:id", async (req, res) => {
-//   try {
-//     res.json(
-//       await Houston.findByIdAndUpdate(req.params.id, req.body, { new: true })
-//     );
-//   } catch (error) {
-//     console.log("error: ", error);
-//     res.json({ error: "something went wrong - check the console" });
-//   }
-// });
-
-// // Austin
-// app.put("/austin/:id", async (req, res) => {
-//   try {
-//     res.json(
-//       await Austin.findByIdAndUpdate(req.params.id, req.body, { new: true })
-//     );
-//   } catch (error) {
-//     console.log("error: ", error);
-//     res.json({ error: "something went wrong - check the console" });
-//   }
-// });
-
-// // Raleigh
-// app.put("/raleigh/:id", async (req, res) => {
-//   try {
-//     res.json(
-//       await Raleigh.findByIdAndUpdate(req.params.id, req.body, { new: true })
-//     );
-//   } catch (error) {
-//     console.log("error: ", error);
-//     res.json({ error: "something went wrong - check the console" });
-//   }
-// });
+})
 
 //
-// Create Routes
+//                      Create Route
 //
 
-// ALL
 app.post("/all", async (req, res) => {
   try {
-    res.json(await All.create(req.body));
+    res.json(await All.create(req.body))
   } catch (error) {
-    res.json({ error: "something went wrong check console" });
+    res.json({ error: "something went wrong check console" })
   }
-});
-
-// // Detroit
-// app.post("/detroit", async (req, res) => {
-//   try {
-//     res.json(await Detroit.create(req.body));
-//   } catch (error) {
-//     res.json({ error: "something went wrong check console" });
-//   }
-// });
-
-// // Houston
-// app.post("/houston", async (req, res) => {
-//   try {
-//     res.json(await Houston.create(req.body));
-//   } catch (error) {
-//     res.json({ error: "something went wrong check console" });
-//   }
-// });
-
-// // Austin
-// app.post("/austin", async (req, res) => {
-//   try {
-//     res.json(await Austin.create(req.body));
-//   } catch (error) {
-//     res.json({ error: "something went wrong check console" });
-//   }
-// });
-// app.post("/raleigh", async (req, res) => {
-//   try {
-//     res.json(await Raleigh.create(req.body));
-//   } catch (error) {
-//     res.json({ error: "something went wrong check console" });
-//   }
-// });
+})
 
 // E
 
 // S
 
 // Tell Express to Listen
-const PORT = process.env.PORT;
-app.listen(PORT, () => console.log(`Express is listening on: ${PORT}`));
+const PORT = process.env.PORT
+app.listen(PORT, () => console.log(`Express is listening on: ${PORT}`))
